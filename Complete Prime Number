@@ -1,0 +1,57 @@
+class Solution {
+public:
+
+    bool isPrime(int num) {
+        if (num < 2) {
+            return false;
+        }
+
+        for (int i = 2; i * i <= num; i++) {
+            if (num % i == 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    bool completePrime(int num) {
+        if (!isPrime(num)) {
+            return false;
+        }
+
+        int temp = num;
+        int power = 1;
+
+        while (temp >= 10) {
+            power *= 10;
+            temp /= 10;
+        }
+
+        int p = power;
+
+        while (p > 0) {
+            int prefix = num / p;
+
+            if (!isPrime(prefix)) {
+                return false;
+            }
+
+            p /= 10;
+        }
+
+        int divisor = 10;
+
+        while (divisor <= power * 10) {
+            int suffix = num % divisor;
+
+            if (!isPrime(suffix)) {
+                return false;
+            }
+
+            divisor *= 10;
+        }
+
+        return true;
+    }
+};
